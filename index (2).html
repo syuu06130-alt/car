@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NERO — 湾岸レーサー</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loading-screen">
+  <div class="loading-inner">
+    <div class="loading-logo">NERO</div>
+    <div class="loading-sub">湾岸ストリートレーサー</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar" id="loading-bar"></div>
+    </div>
+    <div class="loading-pct" id="loading-pct">0%</div>
+  </div>
+</div>
+<!-- ===== TITLE SCREEN ===== -->
+<div id="title-screen" class="screen hidden">
+  <div class="title-content">
+    <div class="title-logo">NERO<span class="title-dot">.</span></div>
+    <div class="title-tagline">WANGAN STREET RACER · 湾岸</div>
+    <div class="title-sep"></div>
+    <button class="btn-start" id="btn-start">RACE NOW</button>
+    <div class="title-controls-hint">
+      <span class="key-hint">W/↑</span> 加速
+      <span class="key-hint">S/↓</span> ブレーキ
+      <span class="key-hint">A / D</span> ステアリング
+      <span class="key-hint">SPC</span> ハンドブレーキ
+      <span class="key-hint">E</span> 乗降
+    </div>
+  </div>
+</div>
+<!-- ===== GAME OVER SCREEN ===== -->
+<div id="gameover-screen" class="screen hidden">
+  <div class="go-content">
+    <div class="go-label">GAME OVER</div>
+    <div class="go-score-row">
+      <span class="go-score-label">SCORE</span>
+      <span class="go-score-val" id="go-score">0</span>
+    </div>
+    <div class="go-score-row">
+      <span class="go-score-label">BEST</span>
+      <span class="go-score-val" id="go-best">0</span>
+    </div>
+    <button class="btn-start" id="btn-retry">RETRY</button>
+  </div>
+</div>
+<!-- ===== HUD ===== -->
+<div id="hud" class="hidden">
+  <div class="hud-top">
+    <div class="hud-block">
+      <div class="hud-label">SCORE</div>
+      <div class="hud-val" id="hud-score">0</div>
+    </div>
+    <div class="hud-block center">
+      <div class="hud-label">TIME</div>
+      <div class="hud-val" id="hud-time">0:00</div>
+    </div>
+    <div class="hud-block right">
+      <div class="hud-label">BEST</div>
+      <div class="hud-val" id="hud-best">0</div>
+    </div>
+  </div>
+  <div class="hud-speedo">
+    <canvas id="speedo-canvas" width="140" height="140"></canvas>
+    <div class="speedo-center">
+      <div class="speedo-num" id="speedo-num">0</div>
+      <div class="speedo-unit">KM/H</div>
+    </div>
+    <div class="speedo-gear" id="speedo-gear">N</div>
+  </div>
+  <div class="hud-minimap">
+    <canvas id="minimap-canvas" width="120" height="120"></canvas>
+  </div>
+  <div class="hud-status" id="hud-status">READY</div>
+  <div class="hud-dmg-wrap">
+    <div class="hud-label">HEALTH</div>
+    <div class="hud-dmg-bar">
+      <div class="hud-dmg-fill" id="hud-dmg-fill"></div>
+    </div>
+  </div>
+  <div class="exit-hint hidden" id="exit-hint">[ E ] 降車</div>
+  <div class="enter-hint hidden" id="enter-hint">[ E ] 乗車</div>
+</div>
+<div id="bump-flash" class="bump-flash"></div>
+<div id="damage-flash" class="damage-flash"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

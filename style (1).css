@@ -1,0 +1,259 @@
+/* =============================================
+   NERO — 湾岸レーサー
+   style.css — Wangan Night Highway Theme
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --gold:    #d4a017;
+  --gold-lt: #f0c842;
+  --cyan:    #00c8ff;
+  --red:     #c0392b;
+  --bg:      #010306;
+  --text:    #dce8f0;
+  --muted:   #506070;
+  --glass:   rgba(0,2,8,0.82);
+  --border:  rgba(0,180,255,0.18);
+  --border-g: rgba(212,160,23,0.22);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--text);
+}
+
+canvas { display: block; }
+
+/* =============================================
+   LOADING
+   ============================================= */
+#loading-screen {
+  position: fixed; inset: 0;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+.loading-inner { text-align: center; }
+.loading-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 96px; letter-spacing: 18px;
+  color: var(--gold);
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(212,160,23,0.5), 0 0 120px rgba(212,160,23,0.2);
+}
+.loading-sub {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px; letter-spacing: 5px;
+  color: var(--muted); margin-top: 6px;
+}
+.loading-bar-wrap {
+  width: 260px; height: 2px;
+  background: rgba(255,255,255,0.07);
+  margin: 32px auto 8px;
+  overflow: hidden;
+}
+.loading-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--gold), var(--cyan));
+  transition: width 0.2s ease;
+  box-shadow: 0 0 12px var(--cyan);
+}
+.loading-pct {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px; color: var(--muted); letter-spacing: 2px;
+}
+
+/* =============================================
+   SCREENS
+   ============================================= */
+.screen {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 8000;
+  background: rgba(0,1,4,0.92);
+}
+.screen.hidden { display: none; }
+
+/* Title */
+.title-content { text-align: center; }
+.title-logo {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 120px; letter-spacing: 20px;
+  color: #fff; line-height: 1;
+  text-shadow: 0 0 80px rgba(0,180,255,0.2);
+}
+.title-dot { color: var(--gold); }
+.title-tagline {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px; letter-spacing: 6px;
+  color: var(--muted); margin-top: 4px;
+}
+.title-sep {
+  width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 28px auto;
+}
+.btn-start {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 5px;
+  color: #000; background: var(--gold);
+  border: none; padding: 16px 48px;
+  cursor: pointer;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+.btn-start:hover {
+  background: var(--gold-lt);
+  transform: scale(1.03);
+  box-shadow: 0 0 30px rgba(212,160,23,0.4);
+}
+.btn-start:active { transform: scale(0.97); }
+.title-controls-hint {
+  margin-top: 28px;
+  font-size: 12px; color: var(--muted); letter-spacing: 1px;
+}
+.key-hint {
+  display: inline-block;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 2px 7px; border-radius: 3px;
+  font-family: 'Orbitron', monospace; font-size: 10px;
+  margin: 0 2px;
+}
+
+/* Game over */
+.go-content { text-align: center; }
+.go-label {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 72px; letter-spacing: 10px;
+  color: var(--red);
+  text-shadow: 0 0 40px rgba(192,57,43,0.5);
+}
+.go-score-row {
+  display: flex; justify-content: center; align-items: baseline;
+  gap: 16px; margin: 8px 0;
+}
+.go-score-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px; letter-spacing: 4px; color: var(--muted);
+}
+.go-score-val {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 52px; color: var(--gold); line-height: 1;
+}
+
+/* =============================================
+   HUD
+   ============================================= */
+#hud { pointer-events: none; z-index: 100; }
+#hud.hidden { display: none; }
+
+.hud-top {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between;
+  padding: 12px 20px;
+  background: linear-gradient(to bottom, rgba(0,1,6,0.80) 0%, transparent 100%);
+}
+.hud-block { min-width: 80px; }
+.hud-block.right { text-align: right; }
+.hud-block.center { text-align: center; flex: 1; }
+.hud-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 3px; color: var(--muted);
+}
+.hud-val {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 32px; color: var(--gold); line-height: 1.1;
+}
+
+/* SPEEDOMETER */
+.hud-speedo {
+  position: fixed; bottom: 20px; right: 20px;
+  width: 140px; height: 140px;
+}
+#speedo-canvas { position: absolute; inset: 0; }
+.speedo-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding-top: 10px;
+}
+.speedo-num {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 42px; color: #fff; line-height: 1;
+}
+.speedo-unit {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 2px; color: var(--muted);
+}
+.speedo-gear {
+  position: absolute; bottom: 14px; right: 14px;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 22px; color: var(--gold-lt);
+}
+
+/* MINIMAP */
+.hud-minimap {
+  position: fixed; bottom: 20px; left: 20px;
+  width: 120px; height: 120px;
+  border: 1px solid var(--border);
+  background: rgba(0,2,8,0.72);
+  overflow: hidden;
+}
+
+/* STATUS */
+.hud-status {
+  position: fixed; top: 80px; left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 4px; color: var(--cyan);
+  opacity: 0.8;
+}
+
+/* DAMAGE BAR */
+.hud-dmg-wrap {
+  position: fixed; bottom: 20px; left: 160px;
+}
+.hud-dmg-bar {
+  width: 120px; height: 4px;
+  background: rgba(255,255,255,0.08);
+  margin-top: 4px;
+}
+.hud-dmg-fill {
+  height: 100%; width: 100%;
+  background: #2ecc71;
+  transition: width 0.3s, background 0.3s;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* HINTS */
+.exit-hint, .enter-hint {
+  position: fixed; bottom: 50%;
+  left: 50%; transform: translateX(-50%);
+  font-family: 'Orbitron', monospace;
+  font-size: 12px; letter-spacing: 3px;
+  color: var(--gold);
+  background: rgba(0,2,8,0.80);
+  padding: 8px 20px;
+  border: 1px solid var(--border-g);
+  pointer-events: none;
+}
+.exit-hint.hidden, .enter-hint.hidden { display: none; }
+
+/* FLASH EFFECTS */
+.bump-flash, .damage-flash {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 200;
+  opacity: 0;
+  transition: opacity 0.05s;
+}
+.bump-flash { background: rgba(255,200,0,0.12); }
+.damage-flash { background: rgba(200,0,0,0.20); }
